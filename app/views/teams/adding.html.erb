@@ -18,14 +18,11 @@
           <%= @ment %>
           <br>
           <br>
-          <form action="/team/addmember" method="get">
-            
+          <%=form_for @team, :url => {:controller => "teams", :action => "addmember", :id => @team.id}, :html => {:method => "get"} do |f| %>
+
             <input type="hidden" name="team" value=<%=@team.id%>>
-            
-            <button class="btn btn-new" href="#" onclick="this.parentNode.submit()">팀원 더 초대하기</button>
-            <a class="btn btn-link" href="<%="/chat/show?team="+@team.id.to_s%>">그만 추가하기</a>
-            
-          </form>
+            <%=link_to "그만 추가하기", chats_path(:team => @team.id), class: "btn btn-link" %>
+          <% end %>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
-class MessageController < ApplicationController
+class MessagesController < ApplicationController
   before_action :authenticate_user!
 
-  def show
+  def index
     @chat = Chat.find(params[:chat])
     @chats = current_user.chats.where(:team_id => params[:team])
     @whiteboard = @chat.whiteboard

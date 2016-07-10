@@ -22,9 +22,20 @@ class TestController < ApplicationController
     if new_user[0]==nil
       NoticeMailer.regmail(params[:email]).deliver_now
       @ment=params[:email]+"로 초대장이 발송되었습니다. 메일을 확인해 보세요!"
+      redirect_to :action => "regmailshow", :ment => @ment, :doesExist => false
+
     else
       @ment=params[:email]+"는 이미 가입되어있는 이메일 입니다."
+      redirect_to :action => "regmailshow", :ment => @ment, :doesExist => true
+
     end
+
+
+  end
+
+  def regmailshow
+    @ment = params[:ment]
+    @doesExist = params[:doesExist]
   end
 
   def authfail

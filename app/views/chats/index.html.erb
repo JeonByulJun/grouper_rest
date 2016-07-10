@@ -9,22 +9,20 @@
       <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
 
       <div class="collapse" id="belong">
-        <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <%= form_for @team, :url => {:action => "change_etc1",:controller => "teams", :id => @team.id}, :html => {:method => "patch", :class => "form-inline"} do |f| %>
           <%= hidden_field_tag "team", @team.id %>
           <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
-        </form>
+        <% end %>
       </div>
 
       <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray; word-wrap:break-word; word-break:break-all;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
       <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
-      
+
       <div class="collapse" id="location" style="">
-        <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <%= form_for @team, :url => {:action => "change_etc2",:controller => "teams", :id => @team.id}, :html => {:method => "patch", :class => "form-inline"} do |f| %>
           <%= hidden_field_tag "team", @team.id %>
           <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
-        </form>
+        <% end %>
       </div>
     </div>
 </div>
@@ -81,7 +79,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
       <% if b.wansungdo < 100 %>
         <% if b.duedate == nil %>

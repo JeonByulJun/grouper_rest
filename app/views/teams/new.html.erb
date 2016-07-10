@@ -14,9 +14,15 @@ background-size: cover;
     <div class="col-sm-4 col-sm-offset-4">
       <div class="panel panel-default">
         <div class="panel-body">
-          <h3>아직 가입된 팀이 없군요!</h3>
-          <a class="btn btn-link" href="/team/newteam">새로운 팀 만들기</a>
-          <a class="btn btn-link" href="/team/search">기존 팀에 초대되기</a>
+          <h3>팀 만들기</h3>
+          <%=form_for Team.new , :html => {:class => "form-inline"} do |f| %>
+
+
+            <div class="form-group">
+              <input type="text" class="form-control" name="teamname" placeholder="팀 이름" required>
+            </div>
+            <button type="submit" class="btn btn-new">팀 만들기</button>
+          <% end %>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-class TeamController < ApplicationController
+class TeamsController < ApplicationController
   before_action :authenticate_user!
 
   def index
@@ -8,7 +8,7 @@ class TeamController < ApplicationController
     @team = current_user.teams
     @user = User.all
     if !current_user.teams.first
-      redirect_to "/team/noteam"
+      redirect_to :action => "noteam"
     end
 
   end
@@ -17,15 +17,16 @@ class TeamController < ApplicationController
     team.users << current_user
     team.users << User.where(:id => params[:user_ids])
     if team.save
-      redirect_to "/team/addmember?team="+team.id.to_s
+      redirect_to addmember_team_path(team.id)
+      #/team/addmember?team="+team.id.to_s
     end
   end
-  def newteam
+  def new
     @team = current_user.teams
     @user = User.all
   end
   def addmember
-    @team = Team.find(params[:team])
+    @team = Team.find(params[:id])
     @user = User.all
     if !@team.users.include?(current_user)
       redirect_to :root
@@ -64,7 +65,7 @@ class TeamController < ApplicationController
       current_user.last_name=params[:lname]
     end
     current_user.save
-    redirect_to "/team/profile"
+    redirect_to :action => "profile"
   end
 
   def deletemember
@@ -90,14 +91,14 @@ class TeamController < ApplicationController
     dd = Team.find(params[:team])
     dd.belong = params[:belong]
     dd.save
-    redirect_to action: 'show', controller: 'chat', team: params[:team]
+    redirect_to action: 'index', controller: 'chats', team: params[:team]
   end
 
   def change_etc2
     dd = Team.find(params[:team])
     dd.location = params[:location]
     dd.save
-    redirect_to action: 'show', controller: 'chat', team: params[:team]
+    redirect_to action: 'index', controller: 'chats', team: params[:team]
   end
 
 

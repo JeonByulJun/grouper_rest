@@ -15,7 +15,7 @@
     <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">나의 할 일</a></li>
     <li role="presentation"><a href="#tasks_complete" aria-controls="tasks_complete" role="tab" data-toggle="tab">완료한 일</a></li>
     <li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">내가 시킨 일</a></li>
-    
+
   </ul>
 
   <!-- Tab panes -->
@@ -243,7 +243,8 @@
                   <div class="col-md-6"></div>
 
                   <div class="col-md-3">
-                    <form action="/task/wansungdo_update" method="post">
+                    <%= form_for taskdo, :url => {:action => "wansungdo_update", :id => taskdo.id}, :html => {:method => "patch"} do |f|%>
+
                       <input type="hidden" name="task_id" value="<%=taskdo.id%>">
                       <input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
                       <div class="row">
@@ -270,7 +271,6 @@
                             ticks_snap_bounds: 30
                         });
                       </script>
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
                       <div class="row" style="margin-top: 10px;">
                         <div class="col-md-6 col-md-offset-4">
                           <span class="glyphicon glyphicon-dashboard" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span><c><%=taskdo.wansungdo%>%</c>
@@ -279,7 +279,7 @@
                           </button>
                         </div>
                       </div>
-                    </form>
+                    <% end %>
                   </div>
 
                 </div>

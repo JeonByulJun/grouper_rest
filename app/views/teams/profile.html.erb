@@ -13,11 +13,11 @@ background-size: cover;
     <div class="col-sm-4 col-sm-offset-4">
       <div class="panel panel-default">
         <div class="panel-body">
-          <form id="profileupload" class="form-inline" action="/team/profileupdate" method="post" enctype="multipart/form-data">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <%= form_for :team, :url => {:action => "profileupdate"}, :html => {:id => "profileupload", :class => "form-inline", :enctype => "multipart/form-data", :method => "patch"} do |f| %>
             <input id="imageupload" type="file" name="image" style="visibility:hidden;position:absolute;top:0;left:0;">
             <label for="imageupload" style="cursor: pointer;"><img class="img-circle" src="<%= current_user.image.url %>" alt="<%=current_user.first_name%>" onmouseover="editImg(this)" onmouseout="normalImg(this)" width="100px" height="100px"></label>
-          </form>
+          <% end %>
+
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
               <a data-toggle="collapse" href="#name" aria-expanded="false" aria-controls="name" style="text-decoration: none;">
@@ -26,10 +26,9 @@ background-size: cover;
             </div>
           </div>
           <div class="collapse" id="name">
-            <form class="form-inline" action="/team/profileupdate" method="post" enctype="multipart/form-data">
-              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+            <%= form_for :team, :url => {:action => "profileupdate"}, :html => {:id => "profileupload", :class => "form-inline", :enctype => "multipart/form-data", :method => "patch"} do |f| %>
               <input class="form-control" type="text" name="name" placeholder="새로운 이름 입력 후 엔터" required>
-            </form>
+            <% end %>
           </div>
           *수정하려는 부분을 클릭하세요
         </div>
@@ -71,7 +70,7 @@ background-size: cover;
       readURL(this);
     });
   });
-  
+
   function readURL(input){
     if(input.files && input.files[0]){
       var reader = new FileReader();

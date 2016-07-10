@@ -1,4 +1,4 @@
-class ChatController < ApplicationController
+class ChatsController < ApplicationController
   before_action :authenticate_user!
 
   def create
@@ -15,13 +15,13 @@ class ChatController < ApplicationController
       @chat.whiteboard = Whiteboard.create(:edit => false, :content => "")
       @chat.whiteboard.user = current_user
       @chat.save
-      redirect_to action: 'show', team: params[:team]
+      redirect_to action: 'index', team: params[:team]
     else
-      redirect_to action: 'show', team: params[:team]
+      redirect_to action: 'index', team: params[:team]
 
     end
   end
-  def show
+  def index
     @team = Team.find(params[:team])
     custom_user_authentication_show(@team)
 
@@ -37,7 +37,7 @@ class ChatController < ApplicationController
     chat = Chat.find(params[:chat])
     if custom_user_authentication_else(chat)
       chat.users.delete(current_user)
-      redirect_to action: 'show', team: params[:team]
+      redirect_to action: 'index', team: params[:team]
     else
       redirect_to :root
     end
@@ -49,9 +49,9 @@ class ChatController < ApplicationController
 
     @chat.users << User.where(:id => params[:user_ids])
     if custom_user_authentication_else(@team) && @chat.save
-      redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
+      redirect_to action: 'index', controller: 'messages', team: params[:team], chat: params[:chat]
     else
-      redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
+      redirect_to action: 'index', controller: 'messages', team: params[:team], chat: params[:chat]
     end
   end
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   resources :resumes, only: [:index, :new, :create, :destroy]
 
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
@@ -8,41 +10,90 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'team#index'
-  get '/team/newteam' => 'team#newteam'
-  get '/team/addmember' => 'team#addmember'
-  post '/team/adding' => 'team#adding'
-  get '/team/adding' => 'team#adding'
-  get '/chat/show' => 'chat#show'
-  post '/chat/create' => 'chat#create'
-  get '/message/show' => 'message#show'
-  post '/message/create' => 'message#create'
-  post '/task/create' => 'task#create'
-  get '/task/show' => 'task#show'
-  get '/task/entire' => 'task#entire'
-  post '/team/create' => 'team#create'
-  post '/task/wansungdo_update' => 'task#wansungdo_update'
-  post '/test/index' => 'test#index'
-  get '/team/profile' => 'team#profile'
-  post '/team/profileupdate' => 'team#profileupdate'
-  post '/team/change_etc1' => 'team#change_etc1'
-  post '/team/change_etc2' => 'team#change_etc2'
-  get '/test/index' => 'test#index'
-  get '/test/invitation' => 'test#invitation'
+
+
+  root 'teams#index'
+  resources :teams, only: [:create, :index, :new] do
+    member do
+      patch :adding
+      get :adding
+      get :addmember
+      patch :change_etc1
+      patch :change_etc2
+      patch :deletemember
+    end
+
+    collection do
+      get :profile
+      patch :profileupdate
+      get :search
+      get :noteam
+    end
+  end
+  #post '/team/deletemember' => 'teams#deletemember'
+
+  #post '/team/profileupdate' => 'teams#profileupdate'
+  #post '/team/change_etc1' => 'teams#change_etc1'
+  #post '/team/change_etc2' => 'teams#change_etc2'
+
+
+
+  resources :chats, only: [:index, :create] do
+
+    member do
+      patch :deletemember
+      patch :addmember
+    end
+
+  end
+
+  #get '/chat/show' => 'chat#show'
+  #post '/chat/create' => 'chat#create'
+  resources :messages, only: [:index, :create, :update] do
+
+    collection do
+      post :fileup
+      post :imageup
+      patch :updateall
+    end
+
+
+  end
+
+
+  #post '/imageup' => 'messages#imageup'
+  #post '/fileup' => 'messages#fileup'
+
   put '/whiteboard/update' => 'whiteboard#update'
   post '/whiteboard/update2' => 'whiteboard#update2'
-  put '/message/update' => 'message#update'
-  post '/imageup' => 'message#imageup'
-  post '/fileup' => 'message#fileup'
-  post '/team/deletemember' => 'team#deletemember'
-  post '/chat/deletemember' => 'chat#deletemember'
-  put '/message/updateall' => 'message#updateall'
+
+  resources :tasks, only: [:index, :create] do
+    member do
+      patch :wansungdo_update
+    end
+  end
+=begin
+  post '/task/create' => 'task#create'
+  get '/task/show' => 'task#show'
+  post '/task/wansungdo_update' => 'task#wansungdo_update'
+=end
+
+
+  post '/test/index' => 'test#index'
+  get '/test/index' => 'test#index'
+  get '/test/invitation' => 'test#invitation'
   post '/test/regmail' => 'test#regmail'
+  get '/test/regmailshow' => 'test#regmailshow'
+
   get '/test/authfail' => 'test#authfail'
-  get '/test/regmail' => 'team#index'
-  get '/team/noteam' => 'team#noteam'
-  get '/team/search' => 'team#search'
-  post '/chat/addmember' => 'chat#addmember'
+
+
+
+
+
+
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

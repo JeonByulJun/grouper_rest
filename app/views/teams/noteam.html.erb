@@ -1,0 +1,24 @@
+<style>
+body
+{
+background-image:url('/bgpic.jpg');
+background-repeat:no-repeat;
+background-size: cover;
+}
+</style>
+
+
+<div style="text-align:center">
+  <div class="row">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>아직 가입된 팀이 없군요!</h3>
+          <%= link_to "새로운 팀 만들기", new_team_path, :class => "btn btn-link" %>
+          <%= link_to "기존 팀에 초대되기", search_teams_path, :class => "btn btn-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
